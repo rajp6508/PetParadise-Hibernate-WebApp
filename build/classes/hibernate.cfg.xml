@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hiber2</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">Rajp@123</property>
+
+        <!-- SQL dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+        <!-- Show SQL queries -->
+        <property name="show_sql">true</property>
+
+        <!-- Update DB schema automatically -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- List your annotated entity classes -->
+        <mapping class="com.example.model.Pet"/>
+        <mapping class="com.example.model.User"/>
+       <mapping class="com.example.model.Pet"/>
+
+        <mapping class="com.example.model.Payment"/>
+<mapping class="com.example.model.PetDetails"/>
+<mapping class="com.example.model.PetDonation"/>
+ <mapping class="com.example.model.Petentity"/>
+
+    </session-factory>
+</hibernate-configuration>
