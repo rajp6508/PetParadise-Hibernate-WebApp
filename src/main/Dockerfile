@@ -1,16 +1,14 @@
-# Step 1: Build stage (Maven)
-FROM maven:3.9.6-eclipse-temurin-17 AS build
-WORKDIR /app
+# Use official Tomcat 11 image
+FROM tomcat:11.0
 
-COPY . .
-RUN mvn clean package -DskipTests
+# Clean default webapps (optional)
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Step 2: Runtime stage (Tomcat)
-FROM tomcat:9.0-jdk17
-WORKDIR /usr/local/tomcat
+# Copy your WAR file into Tomcat
+COPY ROOT.war /usr/local/tomcat/webapps/ROOT.war
 
-RUN rm -rf webapps/*
-COPY --from=build /app/target/*.war webapps/ROOT.war
-
+# Expose port 8080
 EXPOSE 8080
+
+# Start Tomcat
 CMD ["catalina.sh", "run"]
