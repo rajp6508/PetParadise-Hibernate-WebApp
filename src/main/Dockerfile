@@ -1,14 +1,16 @@
-# Use official Tomcat base image
+# Step 1: Build stage (Maven)
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /app
+
+COPY . .
+RUN mvn clean package -DskipTests
+
+# Step 2: Runtime stage (Tomcat)
 FROM tomcat:9.0-jdk17
+WORKDIR /usr/local/tomcat
 
-# Remove default ROOT app
-RUN rm -rf /usr/local/tomcat/webapps/ROOT
+RUN rm -rf webapps/*
+COPY --from=build /app/target/*.war webapps/ROOT.war
 
-# Copy your project files to Tomcat webapps folder
-COPY WebContent /usr/local/tomcat/webapps/ROOT/
-
-# Expose default Tomcat port
 EXPOSE 8080
-
-# Start Tomcat
 CMD ["catalina.sh", "run"]
